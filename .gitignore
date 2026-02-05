@@ -1,0 +1,9 @@
+# Ignore environment files containing secrets
+.env
+.env.local
+js/env.js
+
+# Node and editor
+node_modules/
+.vscode/
+.DS_Store

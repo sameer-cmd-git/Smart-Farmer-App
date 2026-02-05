@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KisanDigiAdvice - Karnataka</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <span data-en="KisanDigiAdvice" data-kn="ಕಿಸಾನ್‌ಡಿಜಿ ಸಲಹೆ">KisanDigiAdvice</span>
+                </div>
+                <div class="header-actions">
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span id="lang-indicator">ಕನ್ನಡ</span>
+                    </button>
+                    <button class="location-btn" onclick="getCurrentLocation()">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Location Section -->
+        <section class="location-section">
+            <div class="container">
+                <h2 data-en="Your Location" data-kn="ನಿಮ್ಮ ಸ್ಥಳ">Your Location</h2>
+                <div class="location-input">
+                    <div class="input-group">
+                        <select id="district-select">
+                            <option value="" data-en="Select District" data-kn="ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ">Select District</option>
+                            <option value="bangalore">Bangalore Urban</option>
+                            <option value="mysore">Mysore</option>
+                            <option value="mandya">Mandya</option>
+                            <option value="hassan">Hassan</option>
+                            <option value="tumkur">Tumkur</option>
+                            <option value="kolar">Kolar</option>
+                            <option value="chikkaballapur">Chikkaballapur</option>
+                            <option value="ramanagara">Ramanagara</option>
+                            <option value="chitradurga">Chitradurga</option>
+                            <option value="davanagere">Davanagere</option>
+                            <option value="shimoga">Shimoga</option>
+                            <option value="chikkamagaluru">Chikkamagaluru</option>
+                            <option value="udupi">Udupi</option>
+                            <option value="dakshina-kannada">Dakshina Kannada</option>
+                            <option value="kodagu">Kodagu</option>
+                            <option value="dharwad">Dharwad</option>
+                            <option value="haveri">Haveri</option>
+                            <option value="uttara-kannada">Uttara Kannada</option>
+                            <option value="gadag">Gadag</option>
+                            <option value="bagalkot">Bagalkot</option>
+                            <option value="vijayapura">Vijayapura</option>
+                            <option value="belagavi">Belagavi</option>
+                            <option value="bellary">Bellary</option>
+                            <option value="koppal">Koppal</option>
+                            <option value="raichur">Raichur</option>
+                            <option value="kalaburagi">Kalaburagi</option>
+                            <option value="bidar">Bidar</option>
+                            <option value="yadgir">Yadgir</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="getLocationData()">
+                        <i class="fas fa-search"></i>
+                        <span data-en="Get Location Info" data-kn="ಸ್ಥಳದ ಮಾಹಿತಿ ಪಡೆಯಿರಿ">Get Location Info</span>
+                    </button>
+                    <div class="privacy-note" role="note" aria-live="polite">
+                        <i class="fas fa-shield-halved"></i>
+                        <span data-en="Privacy: We don’t store or share your location. It stays on your device (browser storage) only to speed up loading and offline use."
+                              data-kn="ಗೌಪ್ಯತೆ: ನಿಮ್ಮ ಸ್ಥಳದ ಮಾಹಿತಿಯನ್ನು ನಾವು ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ ಅಥವಾ ಹಂಚಿಕೊಳ್ಳುವುದಿಲ್ಲ. ವೇಗವಾಗಿ ಲೋಡ್ ಆಗಲು ಮತ್ತು ಆಫ್‌ಲೈನ್ ಬಳಕೆಗಾಗಿ ಮಾತ್ರ ಅದು ನಿಮ್ಮ ಸಾಧನದಲ್ಲೇ (ಬ್ರೌಸರ್ ಸ್ಟೋರೇಜ್) ಉಳಿಯುತ್ತದೆ.">
+                            Privacy: We don’t store or share your location. It stays on your device (browser storage) only to speed up loading and offline use.
+                        </span>
+                    </div>
+                </div>
+                <div id="current-location" class="current-location hidden">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="location-text"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Dashboard -->
+        <section class="weather-section">
+            <div class="container">
+                <h2 data-en="Weather & Alerts" data-kn="ಹವಾಮಾನ ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳು">Weather & Alerts</h2>
+                <div id="weather-dashboard" class="weather-dashboard hidden">
+                    <div class="weather-current">
+                        <div class="weather-icon">
+                            <i id="weather-icon" class="fas fa-sun"></i>
+                        </div>
+                        <div class="weather-info">
+                            <div class="temperature">
+                                <span id="current-temp">--</span>°C
+                            </div>
+                            <div class="weather-desc" id="weather-desc">--</div>
+                            <div class="weather-details">
+                                <span><i class="fas fa-tint"></i> <span id="humidity">--</span>%</span>
+                                <span><i class="fas fa-wind"></i> <span id="wind-speed">--</span> km/h</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weather-forecast" id="weather-forecast">
+                        <!-- Forecast will be populated by JavaScript -->
+                    </div>
+                    <div class="weather-alerts" id="weather-alerts">
+                        <!-- Weather alerts will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Soil Analysis Section -->
+        <section class="soil-section">
+            <div class="container">
+                <h2 data-en="Soil Analysis" data-kn="ಮಣ್ಣಿನ ವಿಶ್ಲೇಷಣೆ">Soil Analysis</h2>
+                <div id="soil-analysis" class="soil-analysis hidden">
+                    <div class="soil-type-card">
+                        <div class="soil-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="soil-info">
+                            <h3 data-en="Soil Type" data-kn="ಮಣ್ಣಿನ ಪ್ರಕಾರ">Soil Type</h3>
+                            <p id="soil-type">--</p>
+                            <div class="soil-properties">
+                                <div class="property">
+                                    <span data-en="pH Level" data-kn="pH ಮಟ್ಟ">pH Level</span>
+                                    <span id="soil-ph">--</span>
+                                </div>
+                                <div class="property">
+                                    <span data-en="Organic Matter" data-kn="ಸಾವಯವ ಪದಾರ್ಥ">Organic Matter</span>
+                                    <span id="organic-matter">--</span>
+                                </div>
+                                <div class="property">
+                                    <span data-en="Moisture" data-kn="ತೇವಾಂಶ">Moisture</span>
+                                    <span id="soil-moisture">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soil-recommendations" id="soil-recommendations">
+                        <!-- Soil recommendations will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crop Recommendations -->
+        <section class="crop-section">
+            <div class="container">
+                <h2 data-en="Crop Recommendations" data-kn="ಬೆಳೆ ಶಿಫಾರಸುಗಳು">Crop Recommendations</h2>
+                <div class="season-selector">
+                    <button class="season-btn active" data-season="kharif">
+                        <span data-en="Kharif (June-Oct)" data-kn="ಖರೀಫ್ (ಜೂನ್-ಅಕ್ಟೋ)">Kharif (June-Oct)</span>
+                    </button>
+                    <button class="season-btn" data-season="rabi">
+                        <span data-en="Rabi (Nov-Mar)" data-kn="ರಬಿ (ನವೆಂ-ಮಾರ್ಚ್)">Rabi (Nov-Mar)</span>
+                    </button>
+                    <button class="season-btn" data-season="zaid">
+                        <span data-en="Zaid (Apr-June)" data-kn="ಜಾಯೀದ್ (ಏಪ್ರಿ-ಜೂನ್)">Zaid (Apr-June)</span>
+                    </button>
+                </div>
+                <div id="crop-recommendations" class="crop-recommendations hidden">
+                    <!-- Crop recommendations will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loading" class="loading hidden">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p data-en="Loading..." data-kn="ಲೋಡ್ ಆಗುತ್ತಿದೆ...">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Offline Banner -->
+        <div id="offline-banner" class="offline-banner hidden">
+            <i class="fas fa-wifi"></i>
+            <span data-en="You're offline. Some features may not be available." data-kn="ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿದ್ದೀರಿ. ಕೆಲವು ವೈಶಿಷ್ಟ್ಯಗಳು ಲಭ್ಯವಿರದಿರಬಹುದು.">You're offline. Some features may not be available.</span>
+        </div>
+    </div>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/enhanced-weather.js"></script>
+    <script src="js/soil.js"></script>
+    <script src="js/crops.js"></script>
+    <script src="js/crop-suitability.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/precision-apis.js"></script>
+    <script>
+        // Register service worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
