@@ -15,6 +15,8 @@ A comprehensive web-based farming assistant designed exclusively for Karnataka f
 
 ## 📱 Demo
 
+Link : https://sameer-cmd-git.github.io/Smart-Farmer-App/
+
 The application works in demo mode without API keys, showing sample data for all features. For live data, configure your API keys as described below.
 
 ## 🚀 Quick Start
